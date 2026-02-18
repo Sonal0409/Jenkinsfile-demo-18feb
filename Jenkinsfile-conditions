@@ -1,0 +1,41 @@
+// Execution of pipleine stages based on user input (choice parameter)
+pipeline{
+    // which server will the pipeline execute on
+    // any = our current server (EC2 instance)
+    agent any
+    tools{
+        maven 'mymaven' // name of maven tool configured in Jenkins
+    }
+  parameters {
+        choice(name: 'ENV', choices: ['', 'Dev', 'Test'], description: 'Environment to build')
+    }
+
+    stages{
+        stage('Build on Dev environment'){
+            when{  // this is if condition for stage execution
+                expression { params.ENV == 'Dev' }  // condition to check if user has selected Dev environment
+            }
+            steps{
+              git  'https://github.com/Sonal0409/DevOpsCodeDemo.git'
+              sh 'mvn compile'
+              sh 'mvn pmd:pmd'
+            }
+        }
+
+        stage('Build of Test Environment')
+    {   when{
+         expression{
+             params.ENV == 'Test'
+         }
+         steps{
+              git  'https://github.com/Sonal0409/DevOpsCodeDemo.git'
+              sh 'mvn test'
+              sh 'mvn pmd:pmd'
+            }
+    }
+
+}
+
+}
+
+}
