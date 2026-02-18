@@ -22,11 +22,10 @@ pipeline{
             }
         }
 
-        stage('Build of Test Environment')
-    {   when{
-         expression{
-             params.ENV == 'Test'
-         }
+        stage('Build of Test Environment'){   
+           when{
+         expression{ params.ENV == 'Test'}
+} 
          steps{
               git  'https://github.com/Sonal0409/DevOpsCodeDemo.git'
               sh 'mvn test'
@@ -38,4 +37,3 @@ pipeline{
 
 }
 
-}
