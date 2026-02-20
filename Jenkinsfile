@@ -1,7 +1,11 @@
 pipeline{
     // which server will the pipeline execute on
     // any = our current server (EC2 instance)
-    agent any
+    agent {
+        
+     label 'linux_node'
+
+    }
     tools{
         maven 'mymaven' // name of maven tool configured in Jenkins
     }
